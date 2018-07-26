@@ -40,13 +40,7 @@ proguard/
 
 # IntelliJ
 *.iml
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/gradle.xml
-.idea/assetWizardSettings.xml
-.idea/dictionaries
-.idea/libraries
-.idea/caches
+.idea
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json
