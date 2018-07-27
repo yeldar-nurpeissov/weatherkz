@@ -19,6 +19,9 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+
+//        buildConfigField("String", "GOOGLE_API_KEY", "AIzaSyCn6rv4Rb1PIA3rrenRfDGIv5Q-gfyBRJg")
+//        buildConfigField("String", "OPEN_WEATHER_API_KEY", "6e572af63e1608796e8b92c05d05b23d")
     }
 }
 
@@ -48,6 +51,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.17'
     implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.1.1'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
 
 //  Room
     implementation "android.arch.persistence.room:runtime:$room_version"
