@@ -18,6 +18,7 @@ public class QueryTime {
     }
 
     public boolean shouldRefresh() {
-        return System.currentTimeMillis() > (time + 360000);
+
+        return System.currentTimeMillis() < (time + 3600000);
     }
 }

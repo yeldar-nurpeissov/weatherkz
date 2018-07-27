@@ -3,13 +3,18 @@ package com.example.weatherkz;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Pair;
+import android.widget.EditText;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -28,13 +33,18 @@ public class MainActivity extends AppCompatActivity {
                 .filter(charSequence ->
                         charSequence.length() >= 2)
                 .debounce(300, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
                 .map(CharSequence::toString)
-                .flatMap(this::getQuery)
-                .flatMap(queryTime -> getData(queryTime.shouldRefresh()))
+                .flatMap(query -> {
+                    QueryTime queryTime = getQuery(query);
+                    return getFromRemote(query, queryTime);
+                })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
         disposable.add(obs.subscribe(string -> Log.d("tag", "debounced " + Arrays.toString(string.toArray()))));
+        if (savedInstanceState == null) {
+            (((EditText) findViewById(R.id.auto_complete_text_view))).setText(" It works");
+        }
 
     }
 
@@ -46,22 +56,41 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public Observable<List<String>> getData(boolean shouldFetch) {
-        return shouldFetch ? getFromRemote() : getFromLocal();
+    public Observable<List<AutoCompleteResult>> getACR(String query) {
+        ArrayList<AutoCompleteResult> item = new ArrayList<>();
+        item.add(new AutoCompleteResult());
+        return Observable.just(item);
     }
 
-    public Observable<List<String>> getFromLocal() {
+    public Observable<List<String>> getFromRemote(String query, QueryTime queryTime) {
+        AtomicBoolean isFresh = new AtomicBoolean(false);
         return Observable.create(emitter -> {
-            Thread.sleep(5000);
-            emitter.onNext(Arrays.asList("1", "2"));
+            if (queryTime != null)
+                Flowable.just(new ArrayList<String>()).subscribe(s -> {
+                    if (!isFresh.get()) {
+                        emitter.onNext(s);
+                    }
+                });
+            if (queryTime.shouldRefresh()) {
+                Observable<List<AutoCompleteResult>> fetchedData = getACR(query);
+                fetchedData.flatMapIterable(autoCompleteResults -> autoCompleteResults)
+                        .flatMap(autoCompleteResult -> Observable.just(new Pair(1l, 1l)))
+                        .flatMap(p -> Observable.just("S: fsdfsd","1","2"))
+                        .reduce(new ArrayList<String>(), (s1, s2) -> {
+                            s1.add(s2);
+                            return s1;
+                        })
+                        .map(strings -> {/*insert room */
+                            return strings;
+                        }).subscribe(strings -> {
+                    isFresh.set(true);
+                    emitter.onNext(strings);
+                });
+            }
         });
     }
 
-    public Observable<List<String>> getFromRemote() {
-        return Observable.create(emitter -> emitter.onNext(Arrays.asList("3", "4")));
-    }
-
-    public Observable<QueryTime> getQuery(String query) {
-        return Observable.just(new QueryTime(query, System.currentTimeMillis()));
+    public QueryTime getQuery(String query) {
+        return new QueryTime(query, System.currentTimeMillis());
     }
 }
