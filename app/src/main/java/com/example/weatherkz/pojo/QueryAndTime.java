@@ -1,5 +1,6 @@
 package com.example.weatherkz.pojo;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
@@ -7,6 +8,7 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(indices = {@Index(value = "query", unique = true)})
 public class QueryAndTime {
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "_id")
     private long id;
     private String query;
     private long time;
@@ -29,7 +31,11 @@ public class QueryAndTime {
         return time;
     }
 
+    public void setTime(long time) {
+        this.time = time;
+    }
+
     public boolean shouldRefresh() {
-        return System.currentTimeMillis() < (time + 3600000);
+        return System.currentTimeMillis() > (time + 3600000);
     }
 }

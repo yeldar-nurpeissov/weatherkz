@@ -2,15 +2,15 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "41b9d4cc067e4b96cbd4001754be585a",
+    "identityHash": "73253673ffb3291227cf75aa7a3d84cb",
     "entities": [
       {
         "tableName": "QueryAndTime",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `query` TEXT, `time` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `query` TEXT, `time` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
-            "columnName": "id",
+            "columnName": "_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -29,7 +29,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "_id"
           ],
           "autoGenerate": true
         },
@@ -75,13 +75,23 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_Weather_cityName_temperature",
+            "unique": true,
+            "columnNames": [
+              "cityName",
+              "temperature"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_Weather_cityName_temperature` ON `${TABLE_NAME}` (`cityName`, `temperature`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"41b9d4cc067e4b96cbd4001754be585a\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"73253673ffb3291227cf75aa7a3d84cb\")"
     ]
   }
 }

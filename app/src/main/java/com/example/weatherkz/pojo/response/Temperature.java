@@ -6,14 +6,13 @@ import com.google.gson.annotations.SerializedName;
 public class Temperature {
     @SerializedName("temp")
     @Expose
-    private Double temp;
+    private float temp;
 
-    public Double getTemp() {
+    public float getTemp() {
         return temp;
     }
 
-    public void setTemp(Double temp) {
+    public void setTemp(float temp) {
         this.temp = temp;
     }
-
 }

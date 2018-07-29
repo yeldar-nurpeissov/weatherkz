@@ -13,17 +13,22 @@ import com.example.weatherkz.pojo.Weather;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
+import io.reactivex.Single;
 
 @Dao
 public abstract class WeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public abstract void insert(QueryAndTime queryAndTime);
+    public abstract long insert(QueryAndTime queryAndTime);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insert(Weather weather);
 
-    @Query("SELECT * FROM queryandtime WHERE `query` like :query")
-    public abstract Flowable<QueryAndTime> getQueryAndTime(String query);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public abstract void insert(List<Weather> weathers);
+
+    @Query("SELECT * FROM queryandtime WHERE `query` = :query")
+    public abstract Single<QueryAndTime> getQueryAndTime(String query);
 
     @Query("SELECT * FROM weather WHERE queryId =:queryId")
     public abstract Flowable<List<Weather>> getWeathers(long queryId);
@@ -38,4 +43,7 @@ public abstract class WeatherDao {
     public void deleteQueryAndWeather(String query) {
 
     }
+
+    @Query("SELECT `query` FROM queryandtime ORDER BY time DESC LIMIT 1")
+    public abstract Maybe<String> getLastQuery();
 }

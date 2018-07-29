@@ -1,9 +1,10 @@
 package com.example.weatherkz.pojo;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
 import android.support.annotation.NonNull;
 
-@Entity(primaryKeys = {"cityName", "temperature"})
+@Entity(primaryKeys = {"cityName", "temperature"}, indices = {@Index(value = {"cityName", "temperature"}, unique = true)})
 public class Weather {
     private long queryId;
     @NonNull
@@ -18,6 +19,10 @@ public class Weather {
 
     public long getQueryId() {
         return queryId;
+    }
+
+    public void setQueryId(long id) {
+        this.queryId = id;
     }
 
     @NonNull
