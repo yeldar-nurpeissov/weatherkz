@@ -1,4 +1,4 @@
-package com.example.weatherkz.pojo;
+package com.example.weatherkz.pojo.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -11,9 +11,6 @@ public class Prediction {
     @SerializedName("id")
     @Expose
     private String id;
-    @SerializedName("place_id")
-    @Expose
-    private String placeId;
     @SerializedName("structured_formatting")
     @Expose
     private StructuredFormatting structuredFormatting;
@@ -27,14 +24,6 @@ public class Prediction {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getPlaceId() {
-        return placeId;
-    }
-
-    public void setPlaceId(String placeId) {
-        this.placeId = placeId;
     }
 
     public StructuredFormatting getStructuredFormatting() {

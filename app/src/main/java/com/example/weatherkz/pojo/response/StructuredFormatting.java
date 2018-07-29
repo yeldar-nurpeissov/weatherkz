@@ -1,4 +1,4 @@
-package com.example.weatherkz.pojo;
+package com.example.weatherkz.pojo.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

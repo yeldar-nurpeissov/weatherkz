@@ -1,4 +1,4 @@
-package com.example.weatherkz.pojo;
+package com.example.weatherkz.pojo.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -11,6 +11,9 @@ public class WeatherResponse {
     @SerializedName("cod")
     @Expose
     private Integer cod;
+    @SerializedName("name")
+    @Expose
+    private String cityName;
 
     public Temperature getMain() {
         return main;
@@ -28,4 +31,11 @@ public class WeatherResponse {
         this.cod = cod;
     }
 
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
 }
