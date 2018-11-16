@@ -1,9 +1,5 @@
 package com.example.weatherkz.ui;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
-
 import com.example.weatherkz.pojo.Weather;
 import com.example.weatherkz.repository.WeatherRepository;
 import com.jakewharton.rxbinding2.InitialValueObservable;
@@ -13,6 +9,9 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;

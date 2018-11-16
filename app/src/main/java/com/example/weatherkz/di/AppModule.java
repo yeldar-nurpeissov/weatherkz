@@ -1,13 +1,13 @@
 package com.example.weatherkz.di;
 
 import android.app.Application;
-import android.arch.persistence.room.Room;
 
 import com.example.weatherkz.db.WeatherDao;
 import com.example.weatherkz.db.WeatherDatabase;
 
 import javax.inject.Singleton;
 
+import androidx.room.Room;
 import dagger.Module;
 import dagger.Provides;
 

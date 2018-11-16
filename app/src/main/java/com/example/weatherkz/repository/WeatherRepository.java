@@ -1,6 +1,5 @@
 package com.example.weatherkz.repository;
 
-import android.support.annotation.Nullable;
 import android.util.Pair;
 
 import com.example.weatherkz.api.GoogleApiService;
@@ -19,6 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
